@@ -13,7 +13,117 @@
     <title>Computer Builder</title>
 </head>
 <body>
-    
+    <div class="vw-100">
+        <div class="bg-dark col-12 py-4 d-flex justify-content-center aling-items-center">
+            <div class="col-10 px-0">
+                <div class="d-flex flex-column text-center text-white">
+                    <h1 class="col-12 m-0"><i class="fas fa-book fa-fw" style="color: #0559eb;"></i> <strong>Computer Builder</strong></h1>
+                    <h4 class="col-12 m-0 pt-3">~ Build Your Own Computer ~</h4>
+                </div>
+            </div>
+        </div>
+        <div class="mx-4 pt-3">
+            <h3 class="py-2">Step 1: Select your CPU</h3>
+        </div>
+        <div class="mx-4 my-3 d-flex justify-content-start flex-row">
+            <h5 class="m-0 pt-1">Brand</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+                <option value="Intel">Intel</option>
+                <option value="AMD">AMD</option>
+            </select>
+            <h5 class="m-0 pt-1">Model</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+            </select>
+        </div>
+        <div class="mx-4 pt-3">
+            <h3 class="py-2">Step 2: Select your GPU</h3>
+        </div>
+        <div class="mx-4 my-3 d-flex justify-content-start flex-row">
+            <h5 class="m-0 pt-1">Brand</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+                <option>NVIDIA</option>
+                <option>AMD</option>
+                <option>Zotac</option>
+                <option>Asus</option>
+                <option>MSI</option>
+                <option>Gigabyte</option>
+                <option>EVGA</option>
+                <option>Sapphire</option>
+                <option>PowerColor</option>
+                <option>XFX</option>
+                <option>ASRock</option>
+                <option>Gainward</option>
+                <option>PNY</option>
+                <option>PwrHis</option>
+            </select>
+            <h5 class="m-0 pt-1">Model</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+            </select>
+        </div>
+        <div class="mx-4 pt-3">
+            <h3 class="py-2">Step 3: Select your Memory Card</h3>
+        </div>
+        <div class="mx-4 my-3 d-flex justify-content-start flex-row">
+            <h5 class="m-0 pt-1">How Many?</h5>
+            <select class="mx-3 col-1">
+                <option>-</option>
+                <option value="">1</option>
+                <option value="">2</option>
+                <option value="">3</option>
+                <option value="">4</option>
+            </select>
+            <h5 class="m-0 pt-1">Brand</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+            </select>
+            <h5 class="m-0 pt-1">Model</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+            </select>
+        </div>
+        <div class="mx-4 pt-3">
+            <h3 class="py-2">Step 4: Select your Storage</h3>
+        </div>
+        <div class="mx-4 my-3 d-flex justify-content-start flex-row">
+            <h5 class="m-0 pt-1">Type</h5>
+            <select class="mx-3 col-1">
+                <option>-</option>
+                <option value="Intel">HDD</option>
+                <option value="AMD">SSD</option>
+            </select>
+            <h5 class="m-0 pt-1">Storage</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+            </select>
+            <h5 class="m-0 pt-1">Brand</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+            </select>
+            <h5 class="m-0 pt-1">Model</h5>
+            <select class="mx-3 col-2">
+                <option>-</option>
+            </select>
+        </div>
+        <div class="col-12 mx-4 py-5 d-flex justify-content-center aling-items-center">
+            <div class="col-2 bg-info">
+                <button id="addBtn" class="btn btn-primary btn-lg col-12">Add PC</button>
+            </div>
+        </div>
+        <div id="target" class="bg-primary col-12 text-white">
+            <div class="">
+                <h1 class="pt-3 text-center"><strong>Your PC1</strong></h1>
+                <div class="mx-4 my-3">
+                    <h1>CPU</h1>
+                    <h4>Brand: </h4>
+                    <h4>Model: </h4>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="index.js"></script>
 </body>
 </html>

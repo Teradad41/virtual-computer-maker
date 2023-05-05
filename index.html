@@ -22,69 +22,80 @@
                 </div>
             </div>
         </div>
+        <!-- CPU -->
         <div class="mx-4 pt-3">
             <h3 class="py-2">Step 1: Select your CPU</h3>
         </div>
         <div class="mx-4 my-3 d-flex justify-content-start flex-row">
             <h5 class="m-0 pt-1">Brand</h5>
-            <select class="mx-3 col-2">
+            <select id="cpuBrand" class="mx-3 col-2">
                 <option>-</option>
                 <option value="Intel">Intel</option>
                 <option value="AMD">AMD</option>
             </select>
             <h5 class="m-0 pt-1">Model</h5>
-            <select class="mx-3 col-2">
+            <select id="cpuTarget" class="mx-3 col-2">
                 <option>-</option>
+                
             </select>
         </div>
+        <!-- GPU -->
         <div class="mx-4 pt-3">
             <h3 class="py-2">Step 2: Select your GPU</h3>
         </div>
         <div class="mx-4 my-3 d-flex justify-content-start flex-row">
             <h5 class="m-0 pt-1">Brand</h5>
-            <select class="mx-3 col-2">
+            <select id="gpuBrand" class="mx-3 col-2">
                 <option>-</option>
-                <option>NVIDIA</option>
-                <option>AMD</option>
-                <option>Zotac</option>
-                <option>Asus</option>
-                <option>MSI</option>
-                <option>Gigabyte</option>
-                <option>EVGA</option>
-                <option>Sapphire</option>
-                <option>PowerColor</option>
-                <option>XFX</option>
-                <option>ASRock</option>
-                <option>Gainward</option>
-                <option>PNY</option>
-                <option>PwrHis</option>
+                <option value="Nvidia">Nvidia</option>
+                <option value="AMD">AMD</option>
+                <option value="Zotac">Zotac</option>
+                <option value="Asus">Asus</option>
+                <option value="MSI">MSI</option>
+                <option value="Gigabyte">Gigabyte</option>
+                <option value="EVGA">EVGA</option>
+                <option value="Sapphire">Sapphire</option>
+                <option value="PowerColor">PowerColor</option>
+                <option value="XFX">XFX</option>
+                <option value="ASRock">ASRock</option>
+                <option value="Gainward">Gainward</option>
+                <option value="PNY">PNY</option>
+                <option value="PwrHis">PwrHis</option>
             </select>
             <h5 class="m-0 pt-1">Model</h5>
-            <select class="mx-3 col-2">
+            <select id="gpuTarget" class="mx-3 col-2">
                 <option>-</option>
+
             </select>
         </div>
+        <!-- Memory -->
         <div class="mx-4 pt-3">
             <h3 class="py-2">Step 3: Select your Memory Card</h3>
         </div>
         <div class="mx-4 my-3 d-flex justify-content-start flex-row">
             <h5 class="m-0 pt-1">How Many?</h5>
-            <select class="mx-3 col-1">
+            <select id="ramAmount" class="mx-3 col-1">
                 <option>-</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
             </select>
             <h5 class="m-0 pt-1">Brand</h5>
-            <select class="mx-3 col-2">
-                <option>-</option>
+            <select id="ramBrand" class="mx-3 col-2">
+                <option value="normal" selected>-</option>
+                <option value="G.SKILL">G.SKILL</option>
+                <option value="Crucial">Crucial</option>
+                <option value="Corsair">Corsair</option>
+                <option value="HyperX">HyperX</option>
             </select>
             <h5 class="m-0 pt-1">Model</h5>
-            <select class="mx-3 col-2">
+            <select id="ramTarget" class="mx-3 col-2">
                 <option>-</option>
+
             </select>
         </div>
+        <!-- Storage -->
         <div class="mx-4 pt-3">
             <h3 class="py-2">Step 4: Select your Storage</h3>
         </div>

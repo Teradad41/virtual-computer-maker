@@ -53,13 +53,14 @@ storageType.addEventListener("change", () => {
 
     storageAmount.innerHTML = setDefaultOption();
     storageAmount.innerHTML += listStorageAmount(storageType.value);
+    // storageAmount.innerHTML += sample(storageAmount, storageType.value);
 });
 
 storageAmount.addEventListener("change", () => {
     const target = document.getElementById("storageBrand");
 
     target.innerHTML = setDefaultOption();
-    target.innerHTML += listStorageBrand(storageType.value);
+    target.innerHTML += listStorageBrand(target, storageType.value);
 });
 
 storageBrand.addEventListener("change", () => {
@@ -91,6 +92,21 @@ function listRamModel(target, amount, brand) {
 
     return target;
 }
+
+// function sample(target, type) {
+//     let hashMap = new Map();
+
+//     fetch(`${config.url}${type}`).then(response => response.json()).then(data => {
+//         for (let key in data) {
+//             let current = data[key];
+//             if (hashMap.get(current.Model) == undefined) {
+//                 hashMap.set()
+//             }
+//         }
+//     });
+
+//     return target;
+// }
 
 function listStorageAmount(type) {
     let htmlString;
@@ -136,41 +152,20 @@ function listStorageAmount(type) {
     return htmlString;
 }
 
-function listStorageBrand(type) {
-    let htmlString;
-    
-    if (type == "hdd") {
-        htmlString =
-        `
-            <option value="WD">WD</option>
-            <option value="HGST">HGST</option>
-            <option value="Seagate">Seagate</option>
-            <option value="Toshiba">Toshiba</option>
-            <option value="Hitachi">Hitachi</option>
-        `;
-    } else if (type == "ssd") {
-        htmlString =
-        `
-            <option value="">Intel</option>
-            <option value="">Samsung</option>
-            <option value="">Sabrent</option>
-            <option value="">Corsair</option>
-            <option value="">Gigabyte</option>
-            <option value="">HP</option>
-            <option value="">Crucial</option>
-            <option value="">WD</option>
-            <option value="">Adata</option>
-            <option value="">SanDisk</option>
-            <option value="">Mushkin</option>
-            <option value="">Seagate</option>
-            <option value="">XPG</option>
-            <option value="">Plextor</option>
-            <option value="">Nvme</option>
-            <option value="">Zotac</option>
-        `;
-    }
+function listStorageBrand(target, type) {
+    let hashMap = new Map();
 
-    return htmlString;
+    fetch(`${config.url}${type}`).then(response => response.json()).then(data => {
+        for (let key in data) {
+            let current = data[key];
+            if (hashMap.get(current.Brand) == undefined) {
+                hashMap.set(current.Brand, 1); 
+                target.innerHTML += `<option value="${current.Brand}">${current.Brand}</option>`;
+            }
+        }
+    })
+
+    return target;
 }
 
 function listStorageModel(target, brand) {
@@ -180,7 +175,7 @@ function listStorageModel(target, brand) {
             if (current.Brand == brand && current.Model.includes(storageAmount.value)) target.innerHTML += `<option>${current.Model}</option>`
         }
     });
-    
+
     return target;
 }
 

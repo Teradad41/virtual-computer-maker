@@ -50,10 +50,7 @@ ramBrand.addEventListener("change", () => {
 // Storage
 storageType.addEventListener("change", () => {
     storageAmount.selectedIndex = 0;
-
-    storageAmount.innerHTML = setDefaultOption();
-    storageAmount.innerHTML += listStorageAmount(storageType.value);
-    // storageAmount.innerHTML += sample(storageAmount, storageType.value);
+    storageAmount.innerHTML += listStorageAmount(storageAmount, storageType.value);
 });
 
 storageAmount.addEventListener("change", () => {
@@ -93,63 +90,41 @@ function listRamModel(target, amount, brand) {
     return target;
 }
 
-// function sample(target, type) {
-//     let hashMap = new Map();
-
-//     fetch(`${config.url}${type}`).then(response => response.json()).then(data => {
-//         for (let key in data) {
-//             let current = data[key];
-//             if (hashMap.get(current.Model) == undefined) {
-//                 hashMap.set()
-//             }
-//         }
-//     });
-
-//     return target;
-// }
-
-function listStorageAmount(type) {
-    let htmlString;
-    if (type == "hdd") {
-        htmlString =
-        `
-            <option value="12TB">12TB</option>
-            <option value="10TB">10TB</option>
-            <option value="8TB">8TB</option>
-            <option value="6TB">6TB</option>
-            <option value="5TB">5TB</option>
-            <option value="4TB">4TB</option>
-            <option value="3TB">3TB</option>
-            <option value="2TB">2TB</option>
-            <option value="1.5TB">1.5TB</option>
-            <option value="1TB">1TB</option>
-            <option value="500GB">500GB</option>
-            <option value="450GB">450GB</option>
-            <option value="300GB">300GB</option>
-            <option value="250GB">250GB</option>
-        `;
-    } else if (type == "ssd") {
-        htmlString =
-        `
-            <option value="4TB">4TB</option>
-            <option value="2TB">2TB</option>
-            <option value="1TB">1TB</option>
-            <option value="960GB">960GB</option>
-            <option value="800GB">800GB</option>
-            <option value="512GB">512GB</option>
-            <option value="500GB">500GB</option>
-            <option value="480GB">480GB</option>
-            <option value="400GB">400GB</option>
-            <option value="280GB">280GB</option>
-            <option value="256GB">256GB</option>
-            <option value="250GB">250GB</option>
-            <option value="128GB">128GB</option>
-            <option value="118GB">118GB</option>
-            <option value="58GB">58GB</option>
-        `;
-    }
-
-    return htmlString;
+function listStorageAmount(target, type) {
+    let hashMap = new Map();
+  
+    fetch(`${config.url}${type}`).then(response => response.json()).then(data => {
+      for (let key in data) {
+        let current = data[key];
+        let amount = getStorageAmount(current.Model);
+  
+        if (hashMap.get(amount) == undefined) {
+          hashMap.set(amount, 1);
+          target.innerHTML += `<option value="${amount}">${amount}</option>`;
+        }
+      }
+  
+      // Mapから配列に変換して、値に基づいて降順にソートする
+      let sortedArray = Array.from(hashMap).sort((a, b) => {
+        let [aAmount, aUnit] = a[0].split(/(?<=\d)(?=[A-Z])/);
+        let [bAmount, bUnit] = b[0].split(/(?<=\d)(?=[A-Z])/);
+  
+        aAmount = parseFloat(aAmount);
+        bAmount = parseFloat(bAmount);
+  
+        if (aUnit === "TB" && bUnit === "GB") return -1;
+        else if (aUnit === "GB" && bUnit === "TB") return 1;
+        else return bAmount - aAmount;
+      });
+  
+      // ソートされた配列から、HTML要素のoptionを再構築する
+      target.innerHTML = `<option>-</option>`;
+      sortedArray.forEach(([amount, count]) => {
+        target.innerHTML += `<option value="${amount}">${amount}</option>`;
+      });
+    });
+  
+    return target;
 }
 
 function listStorageBrand(target, type) {
@@ -159,7 +134,7 @@ function listStorageBrand(target, type) {
         for (let key in data) {
             let current = data[key];
             if (hashMap.get(current.Brand) == undefined) {
-                hashMap.set(current.Brand, 1); 
+                hashMap.set(current.Brand, 1);
                 target.innerHTML += `<option value="${current.Brand}">${current.Brand}</option>`;
             }
         }
@@ -172,11 +147,18 @@ function listStorageModel(target, brand) {
     fetch(`${config.url}${storageType.value}`).then(response => response.json()).then(data => {
         for (let key in data) {
             let current = data[key];
-            if (current.Brand == brand && current.Model.includes(storageAmount.value)) target.innerHTML += `<option>${current.Model}</option>`
+            let amount = getStorageAmount(current.Model);
+
+            if (current.Brand == brand && amount === storageAmount.value) target.innerHTML += `<option>${current.Model}</option>`;
         }
     });
 
     return target;
+}
+
+// モデルの中から'〇〇TB'、'〇〇GB'だけ取得
+function getStorageAmount(product) {
+    return product.includes("TB") ? product.match(/\d+TB|\d+\.\d+TB/)[0] : product.match(/\d+GB|\d+\.\d+GB/)[0];
 }
 
 function judgeRamCondition(product, amount, brand) {

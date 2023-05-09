@@ -3,6 +3,8 @@ const config = {
     cpu: "cpuTarget",
     gpu: "gpuTarget",
     ram: "ramTarget",
+    storage: "storageTarget",
+    addBtn: "addBtn"
 }
 
 function setDefaultOption() {
@@ -16,7 +18,6 @@ const ramBrand = document.getElementById("ramBrand");
 const storageType = document.getElementById("storageType");
 const storageAmount = document.getElementById("storageAmount");
 const storageBrand = document.getElementById("storageBrand");
-const storageModel = document.getElementById("storageModel");
 
 // CPU
 cpuBrand.addEventListener("change", () => {
@@ -61,11 +62,51 @@ storageAmount.addEventListener("change", () => {
 });
 
 storageBrand.addEventListener("change", () => {
-    const target = document.getElementById("storageModel");
+    const target = document.getElementById(config.storage);
 
     target.innerHTML = setDefaultOption();
     target.innerHTML += listStorageModel(target, storageBrand.value);
-})
+});
+
+// add PCボタンが押されたとき
+document.getElementById(config.addBtn).addEventListener("click", () => {
+    let models = document.querySelectorAll(".model");
+    let numOfPc = document.getElementById(config.addBtn).getAttribute("data-times");
+
+    document.getElementById("displayTarget").innerHTML +=
+    `
+        <h1 class="py-4 text-center bg-warning"><strong>Your PC${numOfPc}</strong></h1>
+        <div class="px-5 p-3 col-5">
+            <h1>CPU</h1>
+            <h4>Brand: </h4>
+            <h4>Model: </h4>
+        </div>
+        <div class="px-5 p-3 col-5">
+            <h1>GPU</h1>
+            <h4>Brand: </h4>
+            <h4>Model: </h4>
+        </div>
+        <div class="px-5 p-3 col-5">
+            <h1>RAM</h1>
+            <h4>Brand: </h4>
+            <h4>Model: </h4>
+        </div>
+        <div class="px-5 p-3 col-5">
+            <h1>Storage</h1>
+            <h4>Disk: </h4>
+            <h4>Storage: </h4>
+            <h4>Brand: </h4>
+            <h4>Model: </h4>
+        </div>
+        <div class="d-flex justify-content-around aling-items-center py-4">
+            <h1>Gaming: %</h1>
+            <h1>Work: %</h1>
+        </div>
+    `;
+
+    numOfPc = parseInt(numOfPc) + 1;
+    addBtn.setAttribute("data-times", numOfPc);
+});
 
 function listModel(target, type, brand) {
 

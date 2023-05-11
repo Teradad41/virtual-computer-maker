@@ -4,11 +4,16 @@ const config = {
     gpu: "gpuTarget",
     ram: "ramTarget",
     storage: "storageTarget",
-    addBtn: "addBtn"
+    addBtn: "addBtn",
+    resetBtn: "resetBtn"
 }
 
 function setDefaultOption() {
     return "<option>-</option>";
+}
+
+function setDefaultIndex(ele) {
+    ele.selectedIndex = 0;
 }
 
 const cpuBrand = document.getElementById("cpuBrand");
@@ -19,12 +24,17 @@ const storageType = document.getElementById("storageType");
 const storageAmount = document.getElementById("storageAmount");
 const storageBrand = document.getElementById("storageBrand");
 
+// 全ての選択欄
+const models = document.querySelectorAll(".model");
+// 初期状態が - の欄
+const selects = document.querySelectorAll(".selects");
+
 // CPU
 cpuBrand.addEventListener("change", () => {
     const target = document.getElementById(config.cpu);
 
     target.innerHTML = setDefaultOption();
-    target.innerHTML += listModel(target, "cpu", cpuBrand.value);
+    target.innerHTML += listCpuGpuModel(target, "cpu", cpuBrand.value);
 });
 
 // GPU
@@ -32,12 +42,12 @@ gpuBrand.addEventListener("change", () => {
     const target = document.getElementById(config.gpu);
     
     target.innerHTML = setDefaultOption();
-    target.innerHTML += listModel(target, "gpu", gpuBrand.value);
+    target.innerHTML += listCpuGpuModel(target, "gpu", gpuBrand.value);
 });
 
 // MEMORY
 ramAmount.addEventListener("change", () => {
-    ramBrand.selectedIndex = 0;
+    setDefaultIndex(ramBrand);
     document.getElementById(config.ram).innerHTML = setDefaultOption();
 });
 
@@ -50,7 +60,7 @@ ramBrand.addEventListener("change", () => {
 
 // Storage
 storageType.addEventListener("change", () => {
-    storageAmount.selectedIndex = 0;
+    setDefaultIndex(storageAmount);
     storageAmount.innerHTML += listStorageAmount(storageAmount, storageType.value);
 });
 
@@ -68,37 +78,60 @@ storageBrand.addEventListener("change", () => {
     target.innerHTML += listStorageModel(target, storageBrand.value);
 });
 
-// add PCボタンが押されたとき
+// Resetボタンが押されたとき
+document.getElementById(config.resetBtn).addEventListener("click", () => {
+    let result = confirm("Reset All Data?");
+
+    if (result) {
+        for (let i = 0; i < selects.length; i++) {
+            selects[i].innerHTML = setDefaultOption();
+        }
+        setDefaultIndex(cpuBrand);
+        setDefaultIndex(gpuBrand);
+        setDefaultIndex(ramAmount);
+        setDefaultIndex(ramBrand);
+        setDefaultIndex(storageType);
+    } else return;
+});
+
+// addボタンが押されたとき
 document.getElementById(config.addBtn).addEventListener("click", () => {
-    let models = document.querySelectorAll(".model");
+    for (let i = 0; i < models.length; i++) {
+        if (models[i].value == "-") {
+            alert("Please fill in all forms.");
+            return;
+        }
+    }
+
     let numOfPc = document.getElementById(config.addBtn).getAttribute("data-times");
+    const storageTypeValue = storageType.value == "hdd" ? "HDD" : "SSD";
 
     document.getElementById("displayTarget").innerHTML +=
     `
         <h1 class="py-4 text-center bg-warning"><strong>Your PC${numOfPc}</strong></h1>
         <div class="px-5 p-3 col-5">
             <h1>CPU</h1>
-            <h4>Brand: </h4>
-            <h4>Model: </h4>
+            <h4>Brand: ${cpuBrand.value}</h4>
+            <h4>Model: ${document.getElementById(config.cpu).value}</h4>
         </div>
         <div class="px-5 p-3 col-5">
             <h1>GPU</h1>
-            <h4>Brand: </h4>
-            <h4>Model: </h4>
+            <h4>Brand: ${gpuBrand.value}</h4>
+            <h4>Model: ${document.getElementById(config.gpu).value}</h4>
         </div>
         <div class="px-5 p-3 col-5">
             <h1>RAM</h1>
-            <h4>Brand: </h4>
-            <h4>Model: </h4>
+            <h4>Brand: ${ramBrand.value}</h4>
+            <h4>Model: ${document.getElementById(config.ram).value}</h4>
         </div>
         <div class="px-5 p-3 col-5">
             <h1>Storage</h1>
-            <h4>Disk: </h4>
-            <h4>Storage: </h4>
-            <h4>Brand: </h4>
-            <h4>Model: </h4>
+            <h4>Disk: ${storageTypeValue}</h4>
+            <h4>Storage: ${storageAmount.value}</h4>
+            <h4>Brand: ${storageBrand.value}</h4>
+            <h4>Model: ${document.getElementById(config.storage).value}</h4>
         </div>
-        <div class="d-flex justify-content-around aling-items-center py-4">
+        <div class="d-flex justify-content-around aling-items-center py-4 bg-info">
             <h1>Gaming: %</h1>
             <h1>Work: %</h1>
         </div>
@@ -106,9 +139,11 @@ document.getElementById(config.addBtn).addEventListener("click", () => {
 
     numOfPc = parseInt(numOfPc) + 1;
     addBtn.setAttribute("data-times", numOfPc);
+
+    alert("Added Your PC!");
 });
 
-function listModel(target, type, brand) {
+function listCpuGpuModel(target, type, brand) {
 
     fetch(`${config.url}${type}`).then(response => response.json()).then(data => {
         for (let key in data) {

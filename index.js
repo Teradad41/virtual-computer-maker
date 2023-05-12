@@ -280,7 +280,7 @@ function calcuratebenchmarkHelper(arr, type, storage) {
         storageWeight = 0.05;
     }
 
-    return Math.round(arr[0] * cpuWeight + arr[1] * gpuWeight + arr[2] * ramWeight + arr[3] * storageWeight);
+    return Math.floor(arr[0] * cpuWeight + arr[1] * gpuWeight + arr[2] * ramWeight + arr[3] * storageWeight);
 }
 
 // モデルの中から'〇〇TB'、'〇〇GB'だけ取得

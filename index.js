@@ -80,7 +80,7 @@ storageBrand.addEventListener("change", () => {
 
 // Resetボタンが押されたとき
 document.getElementById(config.resetBtn).addEventListener("click", () => {
-    let result = confirm("Reset All Data?");
+    let result = confirm("Clear all forms?");
 
     if (result) {
         for (let i = 0; i < selects.length; i++) {

@@ -96,16 +96,15 @@ document.getElementById(config.resetBtn).addEventListener("click", () => {
 
 // addボタンが押されたとき
 document.getElementById(config.addBtn).addEventListener("click", () => {
-    // for (let i = 0; i < models.length; i++) {
-    //     if (models[i].value == "-") {
-    //         alert("Please fill in all forms.");
-    //         return;
-    //     }
-    // }
+    for (let i = 0; i < models.length; i++) {
+        if (models[i].value == "-") {
+            alert("Please fill in all forms.");
+            return;
+        }
+    }
 
     let numOfPc = document.getElementById(config.addBtn).getAttribute("data-times");
     const storageTypeValue = storageType.value == "hdd" ? "HDD" : "SSD";
-    let benchmarkScore;
 
     document.getElementById("displayTarget").innerHTML +=
     `
@@ -138,12 +137,12 @@ document.getElementById(config.addBtn).addEventListener("click", () => {
         </div>
     `;
 
-    sample("gaming").then((result) => {
+    calcuratebenchmark("gaming").then((result) => {
         const elements = document.querySelectorAll(".gamingScore").length;
         document.querySelectorAll(".gamingScore")[elements - 1].textContent += `${result}%`;
     });
 
-    sample("work").then((result) => {
+    calcuratebenchmark("work").then((result) => {
         const elements = document.querySelectorAll(".gamingScore").length;
         document.querySelectorAll(".workScore")[elements - 1].textContent += `${result}%`;
     });
@@ -186,8 +185,8 @@ function listStorageAmount(target, type) {
         let amount = getStorageAmount(current.Model);
   
         if (hashMap.get(amount) == undefined) {
-          hashMap.set(amount, 1);
-          target.innerHTML += `<option value="${amount}">${amount}</option>`;
+            hashMap.set(amount, 1);
+            target.innerHTML += `<option value="${amount}">${amount}</option>`;
         }
       }
   
@@ -243,7 +242,7 @@ function listStorageModel(target, brand) {
     return target;
 }
 
-function sample(type) {
+async function calcuratebenchmark(type) {
     const parts = ["cpu", "gpu", "ram", storageType.value];
     const partsConfig = ["cpu", "gpu", "ram", "storage"];
     const promises = [];
@@ -252,20 +251,18 @@ function sample(type) {
       promises.push(
         fetch(`${config.url}${parts[i]}`).then((response) => response.json()).then((data) => {
             for (let key in data) {
-              let current = data[key];
-              if (document.getElementById(`${partsConfig[i]}Target`).value == current.Model) return current.Benchmark;
+              if (document.getElementById(`${partsConfig[i]}Target`).value == data[key].Model) return data[key].Benchmark;
             }
             return null;
           })
       );
     }
-  
-    return Promise.all(promises).then((benchmarks) =>
-      calcurateBenchmark(benchmarks, type, storageType.value)
-    );
+    
+    const benchmarks = await Promise.all(promises);
+    return calcuratebenchmarkHelper(benchmarks, type, storageType.value);
 }
 
-function calcurateBenchmark(arr, type, storage) {
+function calcuratebenchmarkHelper(arr, type, storage) {
     let cpuWeight = 0;
     let gpuWeight = 0;
     let ramWeight = 0;
@@ -297,7 +294,6 @@ function judgeRamCondition(product, amount, brand) {
 
 function countSpace(model) {
     let res = 0;
-
     for (let i = 0; i < model.length; i++) {
         if (model[i] == " ") res++;
     }

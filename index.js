@@ -96,15 +96,16 @@ document.getElementById(config.resetBtn).addEventListener("click", () => {
 
 // addボタンが押されたとき
 document.getElementById(config.addBtn).addEventListener("click", () => {
-    for (let i = 0; i < models.length; i++) {
-        if (models[i].value == "-") {
-            alert("Please fill in all forms.");
-            return;
-        }
-    }
+    // for (let i = 0; i < models.length; i++) {
+    //     if (models[i].value == "-") {
+    //         alert("Please fill in all forms.");
+    //         return;
+    //     }
+    // }
 
     let numOfPc = document.getElementById(config.addBtn).getAttribute("data-times");
     const storageTypeValue = storageType.value == "hdd" ? "HDD" : "SSD";
+    let benchmarkScore;
 
     document.getElementById("displayTarget").innerHTML +=
     `
@@ -132,10 +133,20 @@ document.getElementById(config.addBtn).addEventListener("click", () => {
             <h4>Model: ${document.getElementById(config.storage).value}</h4>
         </div>
         <div class="d-flex justify-content-around aling-items-center py-4 bg-info">
-            <h1>Gaming: %</h1>
-            <h1>Work: %</h1>
+            <h1 class="gamingScore">Gaming: </h1>
+            <h1 class="workScore">Work: </h1>
         </div>
     `;
+
+    sample("gaming").then((result) => {
+        const elements = document.querySelectorAll(".gamingScore").length;
+        document.querySelectorAll(".gamingScore")[elements - 1].textContent += `${result}%`;
+    });
+
+    sample("work").then((result) => {
+        const elements = document.querySelectorAll(".gamingScore").length;
+        document.querySelectorAll(".workScore")[elements - 1].textContent += `${result}%`;
+    });
 
     numOfPc = parseInt(numOfPc) + 1;
     addBtn.setAttribute("data-times", numOfPc);
@@ -230,6 +241,49 @@ function listStorageModel(target, brand) {
     });
 
     return target;
+}
+
+function sample(type) {
+    const parts = ["cpu", "gpu", "ram", storageType.value];
+    const partsConfig = ["cpu", "gpu", "ram", "storage"];
+    const promises = [];
+  
+    for (let i = 0; i < parts.length; i++) {
+      promises.push(
+        fetch(`${config.url}${parts[i]}`).then((response) => response.json()).then((data) => {
+            for (let key in data) {
+              let current = data[key];
+              if (document.getElementById(`${partsConfig[i]}Target`).value == current.Model) return current.Benchmark;
+            }
+            return null;
+          })
+      );
+    }
+  
+    return Promise.all(promises).then((benchmarks) =>
+      calcurateBenchmark(benchmarks, type, storageType.value)
+    );
+}
+
+function calcurateBenchmark(arr, type, storage) {
+    let cpuWeight = 0;
+    let gpuWeight = 0;
+    let ramWeight = 0;
+    let storageWeight = 0;
+
+    if (type == "gaming") {
+        cpuWeight = 0.25;
+        gpuWeight = 0.6;
+        ramWeight = 0.125;
+        storageWeight = storage == "hdd" ? 0.025 : 0.1;
+    } else if (type == "work") {
+        cpuWeight = 0.6;
+        gpuWeight = 0.25;
+        ramWeight = 0.1;
+        storageWeight = 0.05;
+    }
+
+    return Math.round(arr[0] * cpuWeight + arr[1] * gpuWeight + arr[2] * ramWeight + arr[3] * storageWeight);
 }
 
 // モデルの中から'〇〇TB'、'〇〇GB'だけ取得

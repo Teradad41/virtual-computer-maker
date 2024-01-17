@@ -84,4 +84,4 @@ https://github.com/Teradad41/computer_builder/assets/107381511/cdc22989-e920-439
 - [Bootstrap](https://getbootstrap.jp/)
 
 ### README
-- [Aki](https://github.com/Aki158)さん
+- [Aki](https://github.com/Aki158) さん

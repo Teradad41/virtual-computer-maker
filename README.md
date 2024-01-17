@@ -1,17 +1,25 @@
-# Computer Builder
-このプロジェクトは、コンピュータを構築し、性能を比較するアプリケーションです。
-[APIエンドポイント](https://api.recursionist.io/builder/computers)を使用し、CPU、GPU、RAM、HDD、SSDの製品のデータを取得します。
+# Project 4 - Computer Builder
 
-## About
-コンピュータは以下の主要な部分で構成されています。
+## 🌱概要
+パーツを選んで仮想のコンピュータを組み立て、その性能を比較・評価するアプリケーション
+
+## 🏠URL
+https://teradad41.github.io/computer_builder/
+
+## ✨デモ
+https://github.com/Teradad41/computer_builder/assets/107381511/cdc22989-e920-4393-b48e-349a62afa04f
+
+## 📝説明
+ユーザーがコンピュータの構成を調べたり組み立てたりできるアプリを作成しました。
+
+全てのパーツを選択して追加すると、その性能をスコア化して表示します。
+
+コンピュータは以下のパーツで構成されています。
 - CPU
 - GPU
 - RAM
 - ストレージ（HDDまたはSSD）
 
-最終的なスコアは、0〜100で構成されるベンチマークスコアに基づいて、各コンピュータに与えられます。スコアが100を超える場合は、コンピュータが特別なものであることを意味します。
-
-## Features
 ゲーミングコンピュータは、以下の基準を使用します。
 - GPU性能：60%
 - CPU性能：25%
@@ -24,13 +32,48 @@
 - RAM：10%
 - ストレージ：5%
 
-## What I learned
-このプロジェクトで、APIを利用してデータを取得する方法やJSON形式のデータをHTML上で表示可能な形式に変換する方法を学びました。ただ、非同期関数についてはまだ理解が深まっていないと感じました。今後はより高度なWebアプリケーションの開発のために、非同期関数などのより高度な機能について学習を深めていくつもりです。
+## 💾使用技術
+<table>
+<tr>
+  <th>カテゴリ</th>
+  <th>技術スタック</th>
+</tr>
+<tr>
+  <td rowspan=4>フロントエンド</td>
+  <td>HTML</td>
+</tr>
+<tr>
+  <td>CSS</td>
+</tr>
+<tr>
+  <td>フレームワーク : Bootstrap</td>
+</tr>
+<tr>
+  <td>JavaScript</td>
+</tr>
+<td rowspan=2>その他</td>
+  <td>Git</td>
+</tr>
+<tr>
+  <td>GitHub</td>
+  </tr>
+</table>
 
-## Play
-プレイは[こちら](https://teradad41.github.io/computer_builder/)をクリック
+## 📜作成の経緯
 
-## 使用技術
-- HTML/CSS
-- Bootstrap
-- JavaScript
+
+## 💻学んだこと
+
+
+## ⭐️こだわった点
+
+
+## 📮今後実装したいこと
+- [ ] ReactでSPA化
+
+## 📑参考文献
+### 公式ドキュメント
+- [Bootstrap](https://getbootstrap.jp/)
+
+### README
+- [Aki](https://github.com/Aki158)さん

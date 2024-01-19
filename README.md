@@ -1,4 +1,4 @@
-# Project 4 - Computer Builder
+# Virtual Computer Maker
 
 ## 🌱概要
 パーツを選んで仮想のコンピュータを組み立て、その性能を評価・比較するアプリケーション
@@ -82,6 +82,3 @@ https://github.com/Teradad41/computer_builder/assets/107381511/cdc22989-e920-439
 ## 📑参考
 ### 公式ドキュメント
 - [Bootstrap](https://getbootstrap.jp/)
-
-### README
-- [Aki](https://github.com/Aki158) さん

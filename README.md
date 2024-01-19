@@ -4,10 +4,10 @@
 パーツを選んで仮想のコンピュータを組み立て、その性能を評価・比較するアプリケーション
 
 ## 🏠URL
-https://teradad41.github.io/computer_builder/
+https://teradad41.github.io/virtual_computer_maker/
 
 ## ✨デモ
-https://github.com/Teradad41/computer_builder/assets/107381511/cdc22989-e920-4393-b48e-349a62afa04f
+https://github.com/Teradad41/virtual_computer_maker/assets/107381511/cdc22989-e920-4393-b48e-349a62afa04f
 
 ## 📝説明
 ユーザーがコンピュータの構成を調べたり組み立てたりできるアプリを作成しました。
